@@ -7,7 +7,26 @@ public class Repository {
         return basket;
     }
 
+    public Product findById(int id) {
+
+        for (Product item : basket) {
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+        return null;
+
+    }
+
+
     public void save(Product item) {
+        if (findById(item.id) != null) {
+            throw new AlreadyExistsException(
+                    "Element with id: " + item.id + " has already been saved"
+
+            );
+        }
+
         Product[] tmp = new Product[basket.length + 1];
 
         if (basket.length == 0) {
@@ -21,17 +40,6 @@ public class Repository {
         basket = tmp;
     }
 
-    public Product findById(int id) {
-        //    Product element = null;
-
-        for (Product item : basket) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
-
-    }
 
     public void removeById(int id) {
         if (findById(id) == null) {

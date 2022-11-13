@@ -51,6 +51,21 @@ class RepositoryTest {
         assertArrayEquals(expected, actual);
     }
 
+    @Test
+    void saveItemWithDuplicateNumber() {
+        Repository repo = new Repository();
+        repo.save(prod1);
+        repo.save(prod2);
+        repo.save(prod3);
+        repo.save(prod4);
+        repo.save(prod5);
+
+        assertThrows(AlreadyExistsException.class, () -> {
+            repo.save(prod3);
+        });
+
+    }
+
 
     @Test
     void findByIdThereIs() {
